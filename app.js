@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 // import routes
-const userRoute = require("./routes/user.routes");
+const userRouteInscription = require("./routes/inscription.routes");
 
 app.use(bodyParser.json());
-app.use("/user", userRoute);
+app.use("/inscription", userRouteInscription);
 module.exports = app;
