@@ -1,8 +1,8 @@
 const router = require("express").Router();
 
 //import controllers
-const userController = require("../controllers/user.controller");
+const inscriptionController = require("../controllers/inscription.controller");
 
-router.post("/inscription", userController.inscription);
+router.post("/inscription", inscriptionController.inscriptionParticulier);
 
 module.exports = router;
