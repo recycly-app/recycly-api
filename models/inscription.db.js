@@ -35,4 +35,21 @@ recyclyDB.inscriptionTransporteur = (nom, prenom, email, tel, matDePasse) => {
   });
 };
 
+///////////////////////////////////// Inscription d'une Entreprise \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+recyclyDB.inscriptionEntreprise = (email, tel, matDePasse, nomEntreprise) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `INSERT INTO entreprise (email,tel,mot_de_passe,nom_entreprise) VALUES ('${email}','${tel}','${matDePasse}','${nomEntreprise}')`,
+      function (err, results) {
+        if (err) {
+          console.log("error :", err);
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
 module.exports = recyclyDB;
