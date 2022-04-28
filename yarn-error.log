@@ -1,0 +1,52 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\hocin\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add jsonwebtoken
+
+PATH: 
+  C:\Users\hocin\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\hocin\bin;C:\Python39\Scripts;C:\Python39;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Gradle\gradle-4.10.3\bin;C:\Users\hocin\AppData\Roaming\npm\node_modules\yarn\bin;C:\Users\hocin\AppData\Local\Microsoft\WindowsApps;C:\Users\hocin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\hocin\AppData\Roaming\npm\node_modules\yarn\bin;C:\Users\hocin\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  14.18.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'D:\Mes projets\Recycly\recycly\recycly-api\node_modules\bcrypt\lib\binding\napi-v3\bcrypt_lib.node'
+
+npm manifest: 
+  {
+    "name": "recycly-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "nodemon ./server.js localhost 5000"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/recycly-app/recycly-api.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/recycly-app/recycly-api/issues"
+    },
+    "homepage": "https://github.com/recycly-app/recycly-api#readme",
+    "dependencies": {
+      "bcrypt": "^5.0.1",
+      "cors": "^2.8.5",
+      "express": "^4.17.3",
+      "mysql": "^2.18.1",
+      "nodemon": "^2.0.15"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
