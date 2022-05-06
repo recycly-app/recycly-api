@@ -1,4 +1,4 @@
-const db = require("../models/annonce.db");
+const db = require("../models/annonceReconditionnement.db");
 
 //    create annonce
 module.exports.createAnnonceReconditionnment = (req, res) => {
@@ -29,6 +29,18 @@ module.exports.deleteAnnonceReconditionnement = (req, res) => {
       res.status(200).json({
         message: "Annonce supprimé avec succes!",
         result: result,
+      })
+    )
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
+// get recent annoconces
+
+module.exports.getRecentAnnoncesReconditionnement = (req, res) => {
+  db.getRecentAnnoncesReconditionnement()
+    .then((result) =>
+      res.status(200).json({
+        data: result,
       })
     )
     .catch((error) => res.status(400).json({ error: error + "" }));

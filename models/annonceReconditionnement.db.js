@@ -43,4 +43,15 @@ recyclyDB.deleteAnnonceReconditionnement = (id) => {
   });
 };
 
+recyclyDB.getRecentAnnoncesReconditionnement = () => {
+  return new Promise((resolve, reject) => {
+    pool.query(`SELECT * FROM annonce_recondition`, function (err, results) {
+      if (err) {
+        console.log("error create annonce recyclage : ", err);
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
 module.exports = recyclyDB;
