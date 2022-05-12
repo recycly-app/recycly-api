@@ -1,21 +1,20 @@
-const db = require("../models/annonceReconditionnement.db");
+const db = require("../models/annonceRecyclage.db");
 
 //    create annonce
-module.exports.createAnnonceReconditionnment = (req, res) => {
-  db.createAnnonceReconditionnement(
+module.exports.createAnnonceRecyclage = (req, res) => {
+  db.createAnnonceRecyclage(
     req.body.titre,
     req.body.description,
     req.body.date,
-    imagePath,
+    req.body.image,
     req.body.idAnnonceur,
     req.body.prix,
-    req.body.categorie,
-    req.body.etat,
-    req.body.lieuRecuperation
+    req.body.lieuRecuperation,
+    req.body.categorie
   )
     .then((result) =>
       res.status(200).json({
-        message: "Annonce ajouter avec succes!",
+        message: "Annonce recyclage ajouter avec succes!",
         result: result,
       })
     )
@@ -23,11 +22,11 @@ module.exports.createAnnonceReconditionnment = (req, res) => {
 };
 
 //   delete annonce
-module.exports.deleteAnnonceReconditionnement = (req, res) => {
-  db.deleteAnnonceReconditionnement(req.body.id)
+module.exports.deleteAnnonceRecyclage = (req, res) => {
+  db.deleteAnnonceRecyclage(req.body.id)
     .then((result) =>
       res.status(200).json({
-        message: "Annonce supprimé avec succes!",
+        message: "Annonce recyclage supprimé avec succes!",
         result: result,
       })
     )
@@ -36,8 +35,8 @@ module.exports.deleteAnnonceReconditionnement = (req, res) => {
 
 // get recent annoconces
 
-module.exports.getRecentAnnoncesReconditionnement = (req, res) => {
-  db.getRecentAnnoncesReconditionnement()
+module.exports.getRecentAnnoncesRecyclage = (req, res) => {
+  db.getRecentAnnoncesRecyclage()
     .then((result) =>
       res.status(200).json({
         annonce: result,
