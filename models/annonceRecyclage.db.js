@@ -42,7 +42,7 @@ recyclyDB.deleteAnnonceRecyclage = (id) => {
   });
 };
 
-recyclyDB.getRecentAnnoncesRecycalage = () => {
+recyclyDB.getRecentAnnoncesRecyclage = () => {
   return new Promise((resolve, reject) => {
     pool.query(`SELECT * FROM annonce_recy`, function (err, results) {
       if (err) {
