@@ -6,4 +6,9 @@ const annonceController = require("../controllers/annonceReconditionnement.contr
 router.post("/create", annonceController.createAnnonceReconditionnment);
 router.delete("/delete", annonceController.deleteAnnonceReconditionnement);
 router.get("/getRecent", annonceController.getRecentAnnoncesReconditionnement);
+router.get(
+  "/getUserAnnonces/:id",
+  annonceController.getUserAnnoncesReconditionnement
+);
+
 module.exports = router;

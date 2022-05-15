@@ -25,4 +25,5 @@ recyclyDB.getUserId = (id) => {
     });
   });
 };
+
 module.exports = recyclyDB;

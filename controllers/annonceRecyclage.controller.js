@@ -44,3 +44,14 @@ module.exports.getRecentAnnoncesRecyclage = (req, res) => {
     )
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
+
+//  get user annonces
+module.exports.getUserAnnoncesRecyclage = (req, res) => {
+  db.getUserAnnoncesRecyclage(req.params.id)
+    .then((result) =>
+      res.status(200).json({
+        annonce: result,
+      })
+    )
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};

@@ -53,4 +53,20 @@ recyclyDB.getRecentAnnoncesRecyclage = () => {
     });
   });
 };
+
+// get user annonces
+recyclyDB.getUserAnnoncesRecyclage = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT * FROM annonce_recy WHERE id_annonceur= ${id}`,
+      function (err, results) {
+        if (err) {
+          console.log("error create annonce recyclage : ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
 module.exports = recyclyDB;

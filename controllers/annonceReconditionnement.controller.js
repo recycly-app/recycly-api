@@ -45,3 +45,14 @@ module.exports.getRecentAnnoncesReconditionnement = (req, res) => {
     )
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
+
+//  get user annonces
+module.exports.getUserAnnoncesReconditionnement = (req, res) => {
+  db.getUserAnnoncesReconditionnement(req.params.id)
+    .then((result) =>
+      res.status(200).json({
+        annonce: result,
+      })
+    )
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};

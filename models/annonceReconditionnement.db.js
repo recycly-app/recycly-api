@@ -43,6 +43,8 @@ recyclyDB.deleteAnnonceReconditionnement = (id) => {
   });
 };
 
+// get recent annonces
+
 recyclyDB.getRecentAnnoncesReconditionnement = () => {
   return new Promise((resolve, reject) => {
     pool.query(`SELECT * FROM annonce_recondition`, function (err, results) {
@@ -54,4 +56,21 @@ recyclyDB.getRecentAnnoncesReconditionnement = () => {
     });
   });
 };
+
+// get user annonces
+recyclyDB.getUserAnnoncesReconditionnement = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT * FROM annonce_recondition WHERE id_annonceur= ${id}`,
+      function (err, results) {
+        if (err) {
+          console.log("error create annonce reconnditionnement : ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
 module.exports = recyclyDB;
