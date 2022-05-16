@@ -2,11 +2,26 @@ const db = require("../models/annonceRecyclage.db");
 
 //    create annonce
 module.exports.createAnnonceRecyclage = (req, res) => {
+  let image;
+  let uploadPath;
+  image = req.files.image;
+
+  uploadPath = __dirname + "\\images\\" + image.name;
+
+  // uploadPath = uploadPath.replace(/\\/g, "/");
+  console.log(uploadPath);
+
+  image.mv(uploadPath, function (err) {
+    if (err) {
+      return console.log("Erreur image" + err);
+    }
+  });
+  // upload.single(req.file);
   db.createAnnonceRecyclage(
     req.body.titre,
     req.body.description,
     req.body.date,
-    req.body.image,
+    image.name,
     req.body.idAnnonceur,
     req.body.prix,
     req.body.lieuRecuperation,

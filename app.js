@@ -21,5 +21,8 @@ app.use("/connexion", userRouteConnexion);
 app.use("/annonce/Reconditionnement", annonceReconditionnementRoute);
 app.use("/annonce/Recyclage", annonceRecycalgeRoute);
 app.use("/user", userRoute);
+app.get("/images/:image", (req, res, next) => {
+  res.sendFile(__dirname + "/controllers/images/" + req.params.image);
+});
 
 module.exports = app;

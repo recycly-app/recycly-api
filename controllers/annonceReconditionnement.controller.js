@@ -2,24 +2,24 @@ const db = require("../models/annonceReconditionnement.db");
 
 //    create annonce
 module.exports.createAnnonceReconditionnment = (req, res) => {
-  console.log(req.files);
   let image;
   let uploadPath;
   image = req.files.image;
 
-  uploadPath = __dirname + "/images/" + image.name;
+  uploadPath = __dirname + "\\images\\" + image.name;
 
   image.mv(uploadPath, function (err) {
     if (err) {
       return console.log("Erreur image" + err);
     }
   });
-  upload.single(req.file);
+  // upload.single(req.file);
+
   db.createAnnonceReconditionnement(
     req.body.titre,
     req.body.description,
     req.body.date,
-    req.body.image,
+    image.name,
     req.body.idAnnonceur,
     req.body.prix,
     req.body.categorie,
