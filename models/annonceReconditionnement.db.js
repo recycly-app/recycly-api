@@ -28,6 +28,7 @@ recyclyDB.createAnnonceReconditionnement = (
   });
 };
 
+// delete annonce
 recyclyDB.deleteAnnonceReconditionnement = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(

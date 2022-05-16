@@ -4,7 +4,7 @@ const router = require("express").Router();
 const annonceController = require("../controllers/annonceReconditionnement.controller");
 
 router.post("/create", annonceController.createAnnonceReconditionnment);
-router.delete("/delete", annonceController.deleteAnnonceReconditionnement);
+router.delete("/delete/:id", annonceController.deleteAnnonceReconditionnement);
 router.get("/getRecent", annonceController.getRecentAnnoncesReconditionnement);
 router.get(
   "/getUserAnnonces/:id",

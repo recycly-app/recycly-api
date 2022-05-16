@@ -2,11 +2,24 @@ const db = require("../models/annonceReconditionnement.db");
 
 //    create annonce
 module.exports.createAnnonceReconditionnment = (req, res) => {
+  console.log(req.files);
+  let image;
+  let uploadPath;
+  image = req.files.image;
+
+  uploadPath = __dirname + "/images/" + image.name;
+
+  image.mv(uploadPath, function (err) {
+    if (err) {
+      return console.log("Erreur image" + err);
+    }
+  });
+  upload.single(req.file);
   db.createAnnonceReconditionnement(
     req.body.titre,
     req.body.description,
     req.body.date,
-    imagePath,
+    req.body.image,
     req.body.idAnnonceur,
     req.body.prix,
     req.body.categorie,
@@ -24,7 +37,7 @@ module.exports.createAnnonceReconditionnment = (req, res) => {
 
 //   delete annonce
 module.exports.deleteAnnonceReconditionnement = (req, res) => {
-  db.deleteAnnonceReconditionnement(req.body.id)
+  db.deleteAnnonceReconditionnement(req.params.id)
     .then((result) =>
       res.status(200).json({
         message: "Annonce supprimé avec succes!",

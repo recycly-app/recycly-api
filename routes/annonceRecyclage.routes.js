@@ -4,7 +4,7 @@ const router = require("express").Router();
 const annonceController = require("../controllers/annonceRecyclage.controller");
 
 router.post("/create", annonceController.createAnnonceRecyclage);
-router.delete("/delete", annonceController.deleteAnnonceRecyclage);
+router.delete("/delete/:id", annonceController.deleteAnnonceRecyclage);
 router.get("/getRecent", annonceController.getRecentAnnoncesRecyclage);
 router.get("/getUserAnnonces/:id", annonceController.getUserAnnoncesRecyclage);
 module.exports = router;

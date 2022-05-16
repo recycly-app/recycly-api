@@ -30,7 +30,7 @@ recyclyDB.createAnnonceRecyclage = (
 recyclyDB.deleteAnnonceRecyclage = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `DELETE FROM annonce_recy WHERE id_annonce_recondition=${id}`,
+      `DELETE FROM annonce_recy WHERE id_annonce_recy=${id}`,
       function (err, results) {
         if (err) {
           console.log("error delete annonce recyclage : ", err);

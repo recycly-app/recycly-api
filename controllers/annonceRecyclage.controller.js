@@ -23,7 +23,7 @@ module.exports.createAnnonceRecyclage = (req, res) => {
 
 //   delete annonce
 module.exports.deleteAnnonceRecyclage = (req, res) => {
-  db.deleteAnnonceRecyclage(req.body.id)
+  db.deleteAnnonceRecyclage(req.params.id)
     .then((result) =>
       res.status(200).json({
         message: "Annonce recyclage supprimé avec succes!",
