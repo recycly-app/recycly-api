@@ -75,4 +75,46 @@ recyclyDB.getUserAnnoncesReconditionnement = (id) => {
   });
 };
 
+// get filter annonces
+recyclyDB.getFilterAnnoncesReconditionnement = (wilaya, categorie) => {
+  // console.log("wilaya", wilaya);
+  // console.log("cat", categorie);
+  return new Promise((resolve, reject) => {
+    if (wilaya != "null" && categorie != "null") {
+      pool.query(
+        `SELECT * FROM annonce_recondition WHERE wilaya= '${wilaya}' AND categorie= '${categorie}'`,
+        function (err, results) {
+          if (err) {
+            console.log("error create annonce reconnditionnement : ", err);
+            return reject(err);
+          }
+          return resolve(results);
+        }
+      );
+    } else if (wilaya != "null") {
+      pool.query(
+        `SELECT * FROM annonce_recondition WHERE wilaya= '${wilaya}'`,
+        function (err, results) {
+          if (err) {
+            console.log("error create annonce reconnditionnement : ", err);
+            return reject(err);
+          }
+          return resolve(results);
+        }
+      );
+    } else if (categorie != "null") {
+      pool.query(
+        `SELECT * FROM annonce_recondition WHERE categorie= '${categorie}'`,
+        function (err, results) {
+          if (err) {
+            console.log("error create annonce reconnditionnement : ", err);
+            return reject(err);
+          }
+          return resolve(results);
+        }
+      );
+    }
+  });
+};
+
 module.exports = recyclyDB;

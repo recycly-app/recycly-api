@@ -72,3 +72,14 @@ module.exports.getUserAnnoncesReconditionnement = (req, res) => {
     )
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
+
+//  get filter annonces
+module.exports.getFilterAnnoncesReconditionnement = (req, res) => {
+  db.getFilterAnnoncesReconditionnement(req.params.wilaya, req.params.categorie)
+    .then((result) =>
+      res.status(200).json({
+        annonce: result,
+      })
+    )
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};

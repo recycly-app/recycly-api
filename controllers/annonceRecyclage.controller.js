@@ -70,3 +70,14 @@ module.exports.getUserAnnoncesRecyclage = (req, res) => {
     )
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
+
+//  get filter annonces
+module.exports.getFilterAnnoncesRecyclage = (req, res) => {
+  db.getFilterAnnoncesRecyclage(req.params.wilaya, req.params.categorie)
+    .then((result) =>
+      res.status(200).json({
+        annonce: result,
+      })
+    )
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};

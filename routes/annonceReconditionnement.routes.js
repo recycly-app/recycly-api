@@ -10,5 +10,9 @@ router.get(
   "/getUserAnnonces/:id",
   annonceController.getUserAnnoncesReconditionnement
 );
+router.get(
+  "/getFilterAnnonces/:wilaya/:categorie",
+  annonceController.getFilterAnnoncesReconditionnement
+);
 
 module.exports = router;

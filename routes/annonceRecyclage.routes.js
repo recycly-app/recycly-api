@@ -7,4 +7,8 @@ router.post("/create", annonceController.createAnnonceRecyclage);
 router.delete("/delete/:id", annonceController.deleteAnnonceRecyclage);
 router.get("/getRecent", annonceController.getRecentAnnoncesRecyclage);
 router.get("/getUserAnnonces/:id", annonceController.getUserAnnoncesRecyclage);
+router.get(
+  "/getFilterAnnonces/:wilaya/:categorie",
+  annonceController.getFilterAnnoncesRecyclage
+);
 module.exports = router;

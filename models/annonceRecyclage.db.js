@@ -70,4 +70,21 @@ recyclyDB.getUserAnnoncesRecyclage = (id) => {
     );
   });
 };
+
+// get filter annonces
+recyclyDB.getFilterAnnoncesRecyclage = (wilaya, categorie) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT * FROM annonce_recy WHERE wilaya= '${wilaya}' AND categorie= '${categorie}'`,
+      function (err, results) {
+        if (err) {
+          console.log("error create annonce reconnditionnement : ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
 module.exports = recyclyDB;
