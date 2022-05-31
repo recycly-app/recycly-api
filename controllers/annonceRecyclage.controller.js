@@ -1,38 +1,38 @@
 const db = require("../models/annonceRecyclage.db");
-
 //    create annonce
 module.exports.createAnnonceRecyclage = (req, res) => {
+  // ajout de l'image
   let image;
   let uploadPath;
+  // generer un npmbre aleatoire pour eviter les meme nom de fichier
+  let rendom = Math.random() * 100000000000000000;
   image = req.files.image;
+  let imageName = rendom + image.name;
 
-  uploadPath = __dirname + "\\images\\" + image.name;
+  uploadPath = __dirname + "\\images\\" + imageName;
 
-  // uploadPath = uploadPath.replace(/\\/g, "/");
-  console.log(uploadPath);
-
-  image.mv(uploadPath, function (err) {
-    if (err) {
-      return console.log("Erreur image" + err);
-    }
-  });
-  // upload.single(req.file);
   db.createAnnonceRecyclage(
     req.body.titre,
     req.body.description,
     req.body.date,
-    image.name,
+    imageName,
     req.body.idAnnonceur,
     req.body.prix,
     req.body.lieuRecuperation,
-    req.body.categorie
+    req.body.categorie,
+    req.body.wilaya
   )
-    .then((result) =>
+    .then((result) => {
+      image.mv(uploadPath, function (err) {
+        if (err) {
+          return console.log("Erreur image" + err);
+        }
+      });
       res.status(200).json({
         message: "Annonce recyclage ajouter avec succes!",
         result: result,
-      })
-    )
+      });
+    })
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
 

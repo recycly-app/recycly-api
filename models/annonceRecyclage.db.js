@@ -10,12 +10,13 @@ recyclyDB.createAnnonceRecyclage = (
   idAnnonceur,
   prix,
   lieuRecuperation,
-  categorie
+  categorie,
+  wilaya
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO annonce_recy (titre,description,date,photo_annonce,id_annonceur,prix,lieu_recuperation,categorie) VALUES 
-      ('${titre}','${description}','${date}','${photoAnnonce}','${idAnnonceur}','${prix}','${lieuRecuperation}','${categorie}')`,
+      `INSERT INTO annonce_recy (titre,description,date,photo_annonce,id_annonceur,prix,lieu_recuperation,categorie,wilaya) VALUES 
+      ("${titre}","${description}","${date}","${photoAnnonce}","${idAnnonceur}","${prix}",'${lieuRecuperation}',"${categorie}","${wilaya}")`,
       function (err, results) {
         if (err) {
           console.log("error create annonce recyclage : ", err);
