@@ -9,7 +9,8 @@ module.exports.createAnnonceRecyclage = (req, res) => {
   image = req.files.image;
   let imageName = rendom + image.name;
 
-  uploadPath = __dirname + "\\images\\" + imageName;
+  // uploadPath = __dirname + "\\images\\" + imageName;
+  uploadPath = "./images/" + imageName;
 
   db.createAnnonceRecyclage(
     req.body.titre,

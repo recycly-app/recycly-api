@@ -11,6 +11,7 @@ const userRouteConnexion = require("./routes/connexion.routes");
 const annonceReconditionnementRoute = require("./routes/annonceReconditionnement.routes");
 const annonceRecycalgeRoute = require("./routes/annonceRecyclage.routes");
 const userRoute = require("./routes/user.routes");
+const messagerieRoute = require("./routes/messagerie.routes");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -21,8 +22,11 @@ app.use("/connexion", userRouteConnexion);
 app.use("/annonce/Reconditionnement", annonceReconditionnementRoute);
 app.use("/annonce/Recyclage", annonceRecycalgeRoute);
 app.use("/user", userRoute);
+app.use("/message", messagerieRoute);
+
+// get image
 app.get("/images/:image", (req, res, next) => {
-  res.sendFile(__dirname + "/controllers/images/" + req.params.image);
+  res.sendFile(__dirname + "/images/" + req.params.image);
 });
 
 module.exports = app;

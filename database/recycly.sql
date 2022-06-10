@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 09 mai 2022 à 16:48
+-- Généré le : mer. 01 juin 2022 à 13:24
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 7.3.31
 
@@ -37,17 +37,9 @@ CREATE TABLE `annonce_recondition` (
   `prix` int(10) UNSIGNED DEFAULT NULL,
   `categorie` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `etat` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lieu_recuperation` char(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `lieu_recuperation` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wilaya` char(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `annonce_recondition`
---
-
-INSERT INTO `annonce_recondition` (`id_annonce_recondition`, `titre`, `description`, `date`, `photo_annonce`, `id_annonceur`, `prix`, `categorie`, `etat`, `lieu_recuperation`) VALUES
-(9, 'Smartphone', 'Smartphone bon état, écran cassé , pas de chargeur ni de boite ', '2022-05-06', 'undefined', 86, 3000, 'Image - Son', 'bon', 'Tizi'),
-(10, 'Pc portable', 'Pc portable bon état, écran cassé ,pas de disque dur, pas de chargeur ni de boite ', '2022-05-06', 'undefined', 86, 7000, 'Image - Son', 'mauvais', 'Tizi'),
-(11, 'sac', 'sac bon etat', '2022-05-08', 'undefined', 86, 1000, 'Vêtements - Sacs', 'bon', 'tizi-ouzou');
 
 -- --------------------------------------------------------
 
@@ -63,8 +55,9 @@ CREATE TABLE `annonce_recy` (
   `photo_annonce` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_annonceur` int(11) NOT NULL,
   `prix` int(10) UNSIGNED DEFAULT NULL,
-  `type` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lieu_recuperation` char(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `lieu_recuperation` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categorie` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `wilaya` char(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -153,7 +146,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id_user`, `nom`, `prenom`, `email`, `tel`, `mot_de_passe`, `photo_profil`, `type_user`) VALUES
 (84, 'aaaa', 'aaaa', 'hhhh@gmail.Com', '0794949691', '$2b$10$ZSOwgamkeUa7i7LBOsvkd.RBK4DT.vUytscoNcJhp.pN2EfYREYmi', NULL, 'particulier'),
 (85, 'aaaa', 'aaaa', 'hhheh@gmail.Com', '0798949691', '$2b$10$kOoEAgTdXBJNfLgXrZSZcu/J.b.EW1LDdyFdcTH6VgAqNpCgQQ1SC', NULL, 'particulier'),
-(86, 'hoho', 'hoho', 'hoho@gmail.com', '0793459001', '$2b$10$6w1s2.JrzDFcZ6GhbyCKKe9lT.CQ.v8yhQ8o/oljgonFftUV5aAmu', NULL, 'particulier');
+(86, 'FEDANI', 'Hocine', 'hoho@gmail.com', '0793459001', '$2b$10$6w1s2.JrzDFcZ6GhbyCKKe9lT.CQ.v8yhQ8o/oljgonFftUV5aAmu', NULL, 'particulier');
 
 --
 -- Index pour les tables déchargées
@@ -211,13 +204,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `annonce_recondition`
 --
 ALTER TABLE `annonce_recondition`
-  MODIFY `id_annonce_recondition` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_annonce_recondition` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT pour la table `annonce_recy`
 --
 ALTER TABLE `annonce_recy`
-  MODIFY `id_annonce_recy` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_annonce_recy` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT pour la table `entreprise`
