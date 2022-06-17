@@ -84,3 +84,44 @@ module.exports.getFilterAnnoncesReconditionnement = (req, res) => {
     )
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
+
+//    add reservation
+module.exports.addReservationReconditionnement = (req, res) => {
+  db.addReservationReconditionnement(
+    req.body.idAnnonce,
+    req.body.date,
+    req.body.commentaire,
+    req.body.heure
+  )
+    .then((result) => {
+      res.status(200).json({
+        message: "Réservation reconditionnement ajouter avec succes!",
+        result: result,
+      });
+    })
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
+//  get reservation reconditionnement
+module.exports.getReservationReconditionnement = (req, res) => {
+  db.getReservationReconditionnement(req.params.idAnnonce)
+    .then((result) => res.status(200).json(result))
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
+//  accepter reservation reconditionnement
+module.exports.statusReservationReconditionnement = (req, res) => {
+  db.statusReservationReconditionnement(
+    req.params.idReservation,
+    req.params.status
+  )
+    .then((result) => res.status(200).json(result))
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
+// get nombre annonces reconditionnement
+module.exports.getNombreAnnoncesReconditionnement = (req, res) => {
+  db.getNombreAnnoncesReconditionnement(req.params.idAnnonceur)
+    .then((result) => res.status(200).json(result))
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};

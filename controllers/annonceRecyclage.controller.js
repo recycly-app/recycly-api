@@ -82,3 +82,43 @@ module.exports.getFilterAnnoncesRecyclage = (req, res) => {
     )
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
+
+//    add reservation
+module.exports.addReservationRecyclage = (req, res) => {
+  db.addReservationRecyclage(
+    req.body.idAnnonce,
+    req.body.quantite,
+    req.body.date,
+    req.body.commentaire,
+    req.body.heure,
+    req.body.idReserveur
+  )
+    .then((result) => {
+      res.status(200).json({
+        message: "Réservation recyclage ajouter avec succes!",
+        result: result,
+      });
+    })
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
+//  get reservation recyclage
+module.exports.getReservationRecyclage = (req, res) => {
+  db.getReservationRecyclage(req.params.idAnnonce)
+    .then((result) => res.status(200).json(result))
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
+//  accepter reservation recyclage
+module.exports.statusReservationRecyclage = (req, res) => {
+  db.statusReservationRecyclage(req.params.idReservation, req.params.status)
+    .then((result) => res.status(200).json(result))
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
+// get nombre annonces recyclage
+module.exports.getNombreAnnoncesRecyclage = (req, res) => {
+  db.getNombreAnnoncesRecyclage(req.params.idAnnonceur)
+    .then((result) => res.status(200).json(result))
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};

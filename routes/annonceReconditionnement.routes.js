@@ -15,4 +15,20 @@ router.get(
   annonceController.getFilterAnnoncesReconditionnement
 );
 
+router.get(
+  "/getNombreAnnonces/:idAnnonceur",
+  annonceController.getNombreAnnoncesReconditionnement
+);
+
+// reservation recyclage
+router.post("/addReserver", annonceController.addReservationReconditionnement);
+router.get(
+  "/getReservationAnnonces/:idAnnonce",
+  annonceController.getReservationReconditionnement
+);
+router.put(
+  "/accepterReservation/:idReservation/:status",
+  annonceController.statusReservationReconditionnement
+);
+
 module.exports = router;
