@@ -77,8 +77,6 @@ recyclyDB.getUserAnnoncesReconditionnement = (id) => {
 
 // get filter annonces
 recyclyDB.getFilterAnnoncesReconditionnement = (wilaya, categorie) => {
-  // console.log("wilaya", wilaya);
-  // console.log("cat", categorie);
   return new Promise((resolve, reject) => {
     if (wilaya != "null" && categorie != "null") {
       pool.query(

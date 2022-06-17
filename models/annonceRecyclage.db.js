@@ -74,16 +74,40 @@ recyclyDB.getUserAnnoncesRecyclage = (id) => {
 // get filter annonces
 recyclyDB.getFilterAnnoncesRecyclage = (wilaya, categorie) => {
   return new Promise((resolve, reject) => {
-    pool.query(
-      `SELECT * FROM annonce_recy WHERE wilaya= '${wilaya}' AND categorie= '${categorie}'`,
-      function (err, results) {
-        if (err) {
-          console.log("error create annonce reconnditionnement : ", err);
-          return reject(err);
+    if (wilaya != "null" && categorie != "null") {
+      pool.query(
+        `SELECT * FROM annonce_recy WHERE wilaya= '${wilaya}' AND categorie= '${categorie}'`,
+        function (err, results) {
+          if (err) {
+            console.log("error create annonce recyclage : ", err);
+            return reject(err);
+          }
+          return resolve(results);
         }
-        return resolve(results);
-      }
-    );
+      );
+    } else if (wilaya != "null") {
+      pool.query(
+        `SELECT * FROM annonce_recy WHERE wilaya= '${wilaya}'`,
+        function (err, results) {
+          if (err) {
+            console.log("error create annonce recyclage : ", err);
+            return reject(err);
+          }
+          return resolve(results);
+        }
+      );
+    } else if (categorie != "null") {
+      pool.query(
+        `SELECT * FROM annonce_recy WHERE categorie= '${categorie}'`,
+        function (err, results) {
+          if (err) {
+            console.log("error create annonce recyclage : ", err);
+            return reject(err);
+          }
+          return resolve(results);
+        }
+      );
+    }
   });
 };
 
