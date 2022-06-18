@@ -15,8 +15,8 @@ recyclyDB.createAnnonceRecyclage = (
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO annonce_recy (titre,description,date,photo_annonce,id_annonceur,prix,lieu_recuperation,categorie,wilaya) VALUES 
-      ("${titre}","${description}","${date}","${photoAnnonce}","${idAnnonceur}","${prix}",'${lieuRecuperation}',"${categorie}","${wilaya}")`,
+      `INSERT INTO annonce (titre,description,date,photo_annonce,id_annonceur,prix,lieu_recuperation,categorie,wilaya,type) VALUES 
+      ("${titre}","${description}","${date}","${photoAnnonce}","${idAnnonceur}","${prix}",'${lieuRecuperation}',"${categorie}","${wilaya}","Recyclage")`,
       function (err, results) {
         if (err) {
           console.log("error create annonce recyclage : ", err);
@@ -31,7 +31,7 @@ recyclyDB.createAnnonceRecyclage = (
 recyclyDB.deleteAnnonceRecyclage = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `DELETE FROM annonce_recy WHERE id_annonce_recy=${id}`,
+      `DELETE FROM annonce WHERE id_annonce=${id}`,
       function (err, results) {
         if (err) {
           console.log("error delete annonce recyclage : ", err);
@@ -45,13 +45,16 @@ recyclyDB.deleteAnnonceRecyclage = (id) => {
 
 recyclyDB.getRecentAnnoncesRecyclage = () => {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM annonce_recy`, function (err, results) {
-      if (err) {
-        console.log("error get annonce recyclage : ", err);
-        return reject(err);
+    pool.query(
+      `SELECT * FROM annonce WHERE type="Recyclage"`,
+      function (err, results) {
+        if (err) {
+          console.log("error get annonce recyclage : ", err);
+          return reject(err);
+        }
+        return resolve(results);
       }
-      return resolve(results);
-    });
+    );
   });
 };
 
@@ -59,7 +62,7 @@ recyclyDB.getRecentAnnoncesRecyclage = () => {
 recyclyDB.getUserAnnoncesRecyclage = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * FROM annonce_recy WHERE id_annonceur= ${id}`,
+      `SELECT * FROM annonce WHERE id_annonceur= ${id}`,
       function (err, results) {
         if (err) {
           console.log("error create annonce recyclage : ", err);
@@ -76,7 +79,7 @@ recyclyDB.getFilterAnnoncesRecyclage = (wilaya, categorie) => {
   return new Promise((resolve, reject) => {
     if (wilaya != "null" && categorie != "null") {
       pool.query(
-        `SELECT * FROM annonce_recy WHERE wilaya= '${wilaya}' AND categorie= '${categorie}'`,
+        `SELECT * FROM annonce WHERE wilaya= '${wilaya}' AND categorie= '${categorie}' AND type="Recyclage"`,
         function (err, results) {
           if (err) {
             console.log("error create annonce recyclage : ", err);
@@ -87,7 +90,7 @@ recyclyDB.getFilterAnnoncesRecyclage = (wilaya, categorie) => {
       );
     } else if (wilaya != "null") {
       pool.query(
-        `SELECT * FROM annonce_recy WHERE wilaya= '${wilaya}'`,
+        `SELECT * FROM annonce WHERE wilaya= '${wilaya}' AND type="Recyclage"`,
         function (err, results) {
           if (err) {
             console.log("error create annonce recyclage : ", err);
@@ -98,7 +101,7 @@ recyclyDB.getFilterAnnoncesRecyclage = (wilaya, categorie) => {
       );
     } else if (categorie != "null") {
       pool.query(
-        `SELECT * FROM annonce_recy WHERE categorie= '${categorie}'`,
+        `SELECT * FROM annonce WHERE categorie= '${categorie}' AND type="Recyclage"`,
         function (err, results) {
           if (err) {
             console.log("error create annonce recyclage : ", err);
@@ -113,16 +116,16 @@ recyclyDB.getFilterAnnoncesRecyclage = (wilaya, categorie) => {
 
 recyclyDB.addReservationRecyclage = (
   id_annonce,
-  quantite,
   date,
-  commentaire,
   heure,
-  id_reserveur
+  commentaire,
+  id_reserveur,
+  quantite
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO reservation_recy (id_annonce_recy,quantite,date,commentaire,heure,id_reserveur) VALUES 
-      (${id_annonce},"${quantite}","${date}","${commentaire}","${heure}",${id_reserveur})`,
+      `INSERT INTO reservation (id_annonce,date,heure,commentaire,id_reserveur,status,quantite) VALUES 
+      (${id_annonce},"${date}","${heure}","${commentaire}",${id_reserveur},"","${quantite}")`,
       function (err, results) {
         if (err) {
           console.log("error add reservation recyclage : ", err);
@@ -138,7 +141,7 @@ recyclyDB.addReservationRecyclage = (
 recyclyDB.getReservationRecyclage = (id_user) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * FROM annonce_recy INNER JOIN reservation_recy ON annonce_recy.id_annonceur = ${id_user} AND reservation_recy.id_annonce_recy=annonce_recy.id_annonce_recy`,
+      `SELECT * FROM annonce INNER JOIN reservation ON annonce.id_annonceur = ${id_user} AND reservation.id_annonce=annonce.id_annonce`,
       function (err, results) {
         if (err) {
           console.log("error get annonce recycalge : ", err);
@@ -154,7 +157,7 @@ recyclyDB.getReservationRecyclage = (id_user) => {
 recyclyDB.statusReservationRecyclage = (id_reservation, status) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `UPDATE reservation_recy SET status = '${status}' WHERE id_reservation=${id_reservation}`,
+      `UPDATE reservation SET status = '${status}' WHERE id_reservation=${id_reservation}`,
       function (err, results) {
         if (err) {
           console.log("error update annonce recyclage : ", err);
@@ -170,7 +173,7 @@ recyclyDB.statusReservationRecyclage = (id_reservation, status) => {
 recyclyDB.getNombreAnnoncesRecyclage = (id_annonceur) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT count(id_annonce_recy) as nombreAnnonces FROM annonce_recy WHERE id_annonceur=${id_annonceur} `,
+      `SELECT count(id_annonce) as nombreAnnonces FROM annonce WHERE id_annonceur=${id_annonceur} `,
       function (err, results) {
         if (err) {
           console.log("error get nombre annonces recycalge : ", err);

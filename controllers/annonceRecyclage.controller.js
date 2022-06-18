@@ -87,11 +87,11 @@ module.exports.getFilterAnnoncesRecyclage = (req, res) => {
 module.exports.addReservationRecyclage = (req, res) => {
   db.addReservationRecyclage(
     req.body.idAnnonce,
-    req.body.quantite,
     req.body.date,
-    req.body.commentaire,
     req.body.heure,
-    req.body.idReserveur
+    req.body.commentaire,
+    req.body.idReserveur,
+    req.body.quantite
   )
     .then((result) => {
       res.status(200).json({

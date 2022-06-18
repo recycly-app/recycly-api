@@ -16,8 +16,8 @@ recyclyDB.createAnnonceReconditionnement = (
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO annonce_recondition (titre,description,date,photo_annonce,id_annonceur,prix,categorie,etat,lieu_recuperation,wilaya) VALUES 
-      ("${titre}","${description}",'${date}','${photoAnnonce}','${idAnnonceur}','${prix}',"${categorie}",'${etat}','${lieuRecuperation}','${wilaya}')`,
+      `INSERT INTO annonce(titre,description,date,photo_annonce,id_annonceur,prix,categorie,lieu_recuperation,wilaya,type) VALUES 
+      ("${titre}","${description}",'${date}','${photoAnnonce}','${idAnnonceur}','${prix}',"${categorie}",'${lieuRecuperation}','${wilaya}',"Reconditionnement")`,
       function (err, results) {
         if (err) {
           console.log("error create annonce recyclage : ", err);
@@ -33,7 +33,7 @@ recyclyDB.createAnnonceReconditionnement = (
 recyclyDB.deleteAnnonceReconditionnement = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `DELETE FROM annonce_recondition WHERE id_annonce_recondition=${id}`,
+      `DELETE FROM annonce WHERE id_annonce=${id}`,
       function (err, results) {
         if (err) {
           console.log("error create annonce reconnditionnement : ", err);
@@ -49,13 +49,16 @@ recyclyDB.deleteAnnonceReconditionnement = (id) => {
 
 recyclyDB.getRecentAnnoncesReconditionnement = () => {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM annonce_recondition`, function (err, results) {
-      if (err) {
-        console.log("error create annonce reconnditionnement : ", err);
-        return reject(err);
+    pool.query(
+      `SELECT * FROM annonce WHERE type="Reconditionnement"`,
+      function (err, results) {
+        if (err) {
+          console.log("error create annonce reconnditionnement : ", err);
+          return reject(err);
+        }
+        return resolve(results);
       }
-      return resolve(results);
-    });
+    );
   });
 };
 
@@ -63,10 +66,10 @@ recyclyDB.getRecentAnnoncesReconditionnement = () => {
 recyclyDB.getUserAnnoncesReconditionnement = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * FROM annonce_recondition WHERE id_annonceur= ${id}`,
+      `SELECT * FROM annonce WHERE id_annonceur= ${id}`,
       function (err, results) {
         if (err) {
-          console.log("error create annonce reconnditionnement : ", err);
+          console.log("error get user annonces reconnditionnement : ", err);
           return reject(err);
         }
         return resolve(results);
@@ -80,7 +83,7 @@ recyclyDB.getFilterAnnoncesReconditionnement = (wilaya, categorie) => {
   return new Promise((resolve, reject) => {
     if (wilaya != "null" && categorie != "null") {
       pool.query(
-        `SELECT * FROM annonce_recondition WHERE wilaya= '${wilaya}' AND categorie= '${categorie}'`,
+        `SELECT * FROM annonce WHERE wilaya= '${wilaya}' AND categorie= '${categorie}' AND type="Reconditionnement"`,
         function (err, results) {
           if (err) {
             console.log("error create annonce reconnditionnement : ", err);
@@ -91,7 +94,7 @@ recyclyDB.getFilterAnnoncesReconditionnement = (wilaya, categorie) => {
       );
     } else if (wilaya != "null") {
       pool.query(
-        `SELECT * FROM annonce_recondition WHERE wilaya= '${wilaya}'`,
+        `SELECT * FROM annonce WHERE wilaya= '${wilaya}' AND type="Reconditionnement"`,
         function (err, results) {
           if (err) {
             console.log("error create annonce reconnditionnement : ", err);
@@ -102,7 +105,7 @@ recyclyDB.getFilterAnnoncesReconditionnement = (wilaya, categorie) => {
       );
     } else if (categorie != "null") {
       pool.query(
-        `SELECT * FROM annonce_recondition WHERE categorie= '${categorie}'`,
+        `SELECT * FROM annonce WHERE categorie= '${categorie}' AND type="Reconditionnement"`,
         function (err, results) {
           if (err) {
             console.log("error create annonce reconnditionnement : ", err);
@@ -118,13 +121,14 @@ recyclyDB.getFilterAnnoncesReconditionnement = (wilaya, categorie) => {
 recyclyDB.addReservationReconditionnement = (
   id_annonce,
   date,
+  heure,
   commentaire,
-  heure
+  id_reserveur
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO reservation_recondition (id_annonce_recondition,date,commentaire,heure) VALUES 
-      ("${id_annonce}","${date}","${commentaire}","${heure}")`,
+      `INSERT INTO reservation (id_annonce,date,heure,commentaire,id_reserveur,status,quantite) VALUES 
+      (${id_annonce},"${date}","${heure}","${commentaire}",${id_reserveur},"","")`,
       function (err, results) {
         if (err) {
           console.log("error add reservation reconditionnemnt : ", err);
@@ -140,7 +144,7 @@ recyclyDB.addReservationReconditionnement = (
 recyclyDB.getReservationReconditionnement = (id_user) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * FROM annonce_recondition INNER JOIN reservation_recondition ON annonce_recondition.id_annonceur = ${id_user} AND reservation_recondition.id_annonce_recondition=annonce_recondition.id_annonce_recondition`,
+      `SELECT * FROM annonce INNER JOIN reservation ON annonce.id_annonceur = ${id_user} AND reservation.id_annonce=annonce.id_annonce`,
       function (err, results) {
         if (err) {
           console.log("error get annonce reconditionnement : ", err);
@@ -156,7 +160,7 @@ recyclyDB.getReservationReconditionnement = (id_user) => {
 recyclyDB.statusReservationReconditionnement = (id_reservation, status) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `UPDATE reservation_recondition SET status = '${status}' WHERE id_reservation=${id_reservation}`,
+      `UPDATE reservation SET status = '${status}' WHERE id_reservation=${id_reservation}`,
       function (err, results) {
         if (err) {
           console.log("error update annonce reconditionnement : ", err);
@@ -172,7 +176,7 @@ recyclyDB.statusReservationReconditionnement = (id_reservation, status) => {
 recyclyDB.getNombreAnnoncesReconditionnement = (id_annonceur) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT count(id_annonce_recondition) as nombreAnnonces FROM annonce_recondition WHERE id_annonceur=${id_annonceur} `,
+      `SELECT count(id_annonce) as nombreAnnonces FROM annonce WHERE id_annonceur=${id_annonceur} `,
       function (err, results) {
         if (err) {
           console.log("error get nombre annonces reconditionnement : ", err);

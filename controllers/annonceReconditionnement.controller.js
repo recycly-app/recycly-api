@@ -90,8 +90,9 @@ module.exports.addReservationReconditionnement = (req, res) => {
   db.addReservationReconditionnement(
     req.body.idAnnonce,
     req.body.date,
+    req.body.heure,
     req.body.commentaire,
-    req.body.heure
+    req.body.idReserveur
   )
     .then((result) => {
       res.status(200).json({
