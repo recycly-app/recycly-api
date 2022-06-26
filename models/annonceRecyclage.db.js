@@ -11,12 +11,13 @@ recyclyDB.createAnnonceRecyclage = (
   prix,
   lieuRecuperation,
   categorie,
-  wilaya
+  wilaya,
+  quantite
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO annonce (titre,description,date,photo_annonce,id_annonceur,prix,lieu_recuperation,categorie,wilaya,type) VALUES 
-      ("${titre}","${description}","${date}","${photoAnnonce}","${idAnnonceur}","${prix}",'${lieuRecuperation}',"${categorie}","${wilaya}","Recyclage")`,
+      `INSERT INTO annonce (titre,description,date,photo_annonce,id_annonceur,prix,lieu_recuperation,categorie,wilaya,type,quantite) VALUES 
+      ("${titre}","${description}","${date}","${photoAnnonce}","${idAnnonceur}","${prix}",'${lieuRecuperation}',"${categorie}","${wilaya}","Recyclage","${quantite}")`,
       function (err, results) {
         if (err) {
           console.log("error create annonce recyclage : ", err);
@@ -62,7 +63,7 @@ recyclyDB.getRecentAnnoncesRecyclage = () => {
 recyclyDB.getUserAnnoncesRecyclage = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * FROM annonce WHERE id_annonceur= ${id}`,
+      `SELECT * FROM annonce WHERE id_annonceur= ${id} AND type="Recyclage"`,
       function (err, results) {
         if (err) {
           console.log("error create annonce recyclage : ", err);
@@ -169,6 +170,36 @@ recyclyDB.statusReservationRecyclage = (id_reservation, status) => {
   });
 };
 
+recyclyDB.addNotificationRecyclage = (id_reservation, date) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `INSERT INTO notification (id_reservation,date_heure) VALUES (${id_reservation},"${date}")`,
+      function (err, results) {
+        if (err) {
+          console.log("error add notification recyclage : ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+//  get notifications
+recyclyDB.getNotificationRecyclage = (id_user) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT * FROM notification INNER JOIN reservation ON reservation.id_reserveur = ${id_user}`,
+      function (err, results) {
+        if (err) {
+          console.log("error get notifications recyclage : ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
 // get nombre annonces recyclage
 recyclyDB.getNombreAnnoncesRecyclage = (id_annonceur) => {
   return new Promise((resolve, reject) => {

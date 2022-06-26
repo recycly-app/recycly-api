@@ -26,4 +26,10 @@ router.put(
   "/accepterReservation/:idReservation/:status",
   annonceController.statusReservationRecyclage
 );
+router.post("/addNotification", annonceController.addNotificationRecyclage);
+router.get(
+  "/getNotifications/:idUser",
+  annonceController.getNotificationRecyclage
+);
+
 module.exports = router;

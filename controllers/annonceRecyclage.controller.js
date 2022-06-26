@@ -21,7 +21,8 @@ module.exports.createAnnonceRecyclage = (req, res) => {
     req.body.prix,
     req.body.lieuRecuperation,
     req.body.categorie,
-    req.body.wilaya
+    req.body.wilaya,
+    req.body.quantite
   )
     .then((result) => {
       image.mv(uploadPath, function (err) {
@@ -102,6 +103,24 @@ module.exports.addReservationRecyclage = (req, res) => {
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
 
+//    add notification
+module.exports.addNotificationRecyclage = (req, res) => {
+  db.addNotificationRecyclage(req.body.idReservation, req.body.date_heure)
+    .then((result) => {
+      res.status(200).json({
+        message: "Notification recyclage ajouter avec succes!",
+        result: result,
+      });
+    })
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
+//  get notifiacation
+module.exports.getNotificationRecyclage = (req, res) => {
+  db.getNotificationRecyclage(req.params.idUser)
+    .then((result) => res.status(200).json(result))
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
 //  get reservation recyclage
 module.exports.getReservationRecyclage = (req, res) => {
   db.getReservationRecyclage(req.params.idAnnonce)

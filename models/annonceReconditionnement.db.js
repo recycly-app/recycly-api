@@ -66,7 +66,7 @@ recyclyDB.getRecentAnnoncesReconditionnement = () => {
 recyclyDB.getUserAnnoncesReconditionnement = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * FROM annonce WHERE id_annonceur= ${id}`,
+      `SELECT * FROM annonce WHERE id_annonceur= ${id} AND type="Reconditionnement"`,
       function (err, results) {
         if (err) {
           console.log("error get user annonces reconnditionnement : ", err);
