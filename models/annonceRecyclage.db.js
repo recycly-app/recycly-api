@@ -155,18 +155,31 @@ recyclyDB.getReservationRecyclage = (id_user) => {
 };
 
 // update reservations recyclage
-recyclyDB.statusReservationRecyclage = (id_reservation, status) => {
+recyclyDB.statusReservationRecyclage = (id_reservation, status, motifRefus) => {
   return new Promise((resolve, reject) => {
-    pool.query(
-      `UPDATE reservation SET status = '${status}' WHERE id_reservation=${id_reservation}`,
-      function (err, results) {
-        if (err) {
-          console.log("error update annonce recyclage : ", err);
-          return reject(err);
+    if (!motifRefus) {
+      pool.query(
+        `UPDATE reservation SET status = '${status}' WHERE id_reservation=${id_reservation}`,
+        function (err, results) {
+          if (err) {
+            console.log("error update annonce recyclage : ", err);
+            return reject(err);
+          }
+          return resolve(results);
         }
-        return resolve(results);
-      }
-    );
+      );
+    } else {
+      pool.query(
+        `UPDATE reservation SET status = '${status}',motif_refus="${motifRefus}" WHERE id_reservation=${id_reservation}`,
+        function (err, results) {
+          if (err) {
+            console.log("error update annonce recyclage : ", err);
+            return reject(err);
+          }
+          return resolve(results);
+        }
+      );
+    }
   });
 };
 

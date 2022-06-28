@@ -130,7 +130,11 @@ module.exports.getReservationRecyclage = (req, res) => {
 
 //  accepter reservation recyclage
 module.exports.statusReservationRecyclage = (req, res) => {
-  db.statusReservationRecyclage(req.params.idReservation, req.params.status)
+  db.statusReservationRecyclage(
+    req.params.idReservation,
+    req.params.status,
+    req.body.motifRefus
+  )
     .then((result) => res.status(200).json(result))
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
