@@ -29,8 +29,42 @@ recyclyDB.createAnnonceRecyclage = (
   });
 };
 
+recyclyDB.updateAnnonceRecyclage = (id, titre, prix, description) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE annonce SET titre='${titre}',prix=${prix},description='${description}' WHERE id_annonce=${id}`,
+      function (err, results) {
+        if (err) {
+          console.log("error update annonce recyclage : ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+// update annonce
 recyclyDB.deleteAnnonceRecyclage = (id) => {
   return new Promise((resolve, reject) => {
+    pool.query(
+      `DELETE FROM notification WHERE id_annonce=${id}`,
+      function (err) {
+        if (err) {
+          console.log("error delete annonce recyclage : ", err);
+          return reject(err);
+        }
+      }
+    );
+    pool.query(
+      `DELETE FROM reservation WHERE id_annonce=${id}`,
+      function (err) {
+        if (err) {
+          console.log("error delete annonce recyclage : ", err);
+          return reject(err);
+        }
+      }
+    );
     pool.query(
       `DELETE FROM annonce WHERE id_annonce=${id}`,
       function (err, results) {
@@ -202,7 +236,7 @@ recyclyDB.addNotificationRecyclage = (id_reservation, date) => {
 recyclyDB.getNotificationRecyclage = (id_user) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * FROM notification INNER JOIN reservation ON reservation.id_reserveur = ${id_user}`,
+      `SELECT titre,nom,prenom,status FROM notification INNER JOIN reservation ON reservation.id_reserveur = ${id_user} INNER JOIN annonce ON reservation.id_annonce = annonce.id_annonce INNER JOIN user ON user.id_user = annonce.id_annonceur`,
       function (err, results) {
         if (err) {
           console.log("error get notifications recyclage : ", err);
@@ -217,7 +251,7 @@ recyclyDB.getNotificationRecyclage = (id_user) => {
 recyclyDB.getNombreAnnoncesRecyclage = (id_annonceur) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT count(id_annonce) as nombreAnnonces FROM annonce WHERE id_annonceur=${id_annonceur} `,
+      `SELECT count(id_annonce) as nombreAnnonces FROM annonce WHERE id_annonceur=${id_annonceur} AND type='Recyclage'`,
       function (err, results) {
         if (err) {
           console.log("error get nombre annonces recycalge : ", err);
@@ -228,4 +262,5 @@ recyclyDB.getNombreAnnoncesRecyclage = (id_annonceur) => {
     );
   });
 };
+
 module.exports = recyclyDB;

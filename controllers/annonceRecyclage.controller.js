@@ -50,6 +50,22 @@ module.exports.deleteAnnonceRecyclage = (req, res) => {
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
 
+//   update annonce
+module.exports.updateAnnonceRecyclage = (req, res) => {
+  db.updateAnnonceRecyclage(
+    req.body.id,
+    req.body.titre,
+    req.body.prix,
+    req.body.description
+  )
+    .then((result) =>
+      res.status(200).json({
+        message: "Annonce recyclage mit à jour avec succes!",
+      })
+    )
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
 // get recent annoconces
 
 module.exports.getRecentAnnoncesRecyclage = (req, res) => {

@@ -18,12 +18,27 @@ recyclyDB.addMessage = (id_sender, id_reciever, message, date) => {
   });
 };
 
+// add contact
+recyclyDB.addContact = (id_user, id_contact) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `INSERT INTO contacts (id_user,id_contact) VALUES ('${id_user}','${id_contact}')`,
+      function (err, results) {
+        if (err) {
+          console.log("error add contact : ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
 // get contact
 recyclyDB.getContacts = (id_user) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      // `SELECT id_contact FROM contacts WHERE id_user=${id_user}`,
-      `SELECT user.id_user,nom,prenom,email,tel,photo_profil,type_user FROM user INNER JOIN contacts ON user.id_user = contacts.id_contact AND contacts.id_user=${id_user}`,
+      `SELECT user.id_user,nom,prenom,email,tel,photo_profil,type_user FROM user INNER JOIN contacts ON user.id_user = contacts.id_contact AND contacts.id_user=${id_user} OR contacts.id_contact=${id_user}`,
       function (err, results) {
         if (err) {
           console.log("error add message : ", err);

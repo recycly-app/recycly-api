@@ -3,6 +3,7 @@ const messagerieController = require("../controllers/messagerie.controller");
 const { getContact } = require("../models/messagerie.db");
 
 router.post("/addMessage", messagerieController.addMessage);
+router.post("/addContact", messagerieController.addContact);
 router.get("/getContacts/:id", messagerieController.getContacts);
 router.get(
   "/getMessages/:id_user/:id_contact",

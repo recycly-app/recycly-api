@@ -21,6 +21,7 @@ module.exports.inscription = async (req, res) => {
 
   // hash du mot de passe
   const hashedMotDePasse = await bcrypt.hash(req.body.motDePasse, 10);
+
   db.inscription(nom, prenom, email, tel, hashedMotDePasse, typeUser)
     .then((result) =>
       res.status(200).json({

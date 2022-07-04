@@ -17,6 +17,17 @@ module.exports.addMessage = (req, res) => {
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
 
+//add contact
+module.exports.addContact = (req, res) => {
+  db.addContact(req.body.id_user, req.body.id_contact)
+    .then((result) => {
+      res.status(200).json({
+        message: "Contact ajouter avec succes!",
+      });
+    })
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
 // get contacts
 module.exports.getContacts = (req, res) => {
   db.getContacts(req.params.id)
