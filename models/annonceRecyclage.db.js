@@ -193,7 +193,7 @@ recyclyDB.statusReservationRecyclage = (id_reservation, status, motifRefus) => {
   return new Promise((resolve, reject) => {
     if (!motifRefus) {
       pool.query(
-        `UPDATE reservation SET status = '${status}' WHERE id_reservation=${id_reservation}`,
+        `UPDATE reservation SET status = '${status}',lu=1 WHERE id_reservation=${id_reservation}`,
         function (err, results) {
           if (err) {
             console.log("error update annonce recyclage : ", err);
@@ -204,7 +204,7 @@ recyclyDB.statusReservationRecyclage = (id_reservation, status, motifRefus) => {
       );
     } else {
       pool.query(
-        `UPDATE reservation SET status = '${status}',motif_refus="${motifRefus}" WHERE id_reservation=${id_reservation}`,
+        `UPDATE reservation SET status = '${status}',lu=1,motif_refus="${motifRefus}" WHERE id_reservation=${id_reservation}`,
         function (err, results) {
           if (err) {
             console.log("error update annonce recyclage : ", err);
@@ -252,6 +252,22 @@ recyclyDB.getNombreAnnoncesRecyclage = (id_annonceur) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT count(id_annonce) as nombreAnnonces FROM annonce WHERE id_annonceur=${id_annonceur} AND type='Recyclage'`,
+      function (err, results) {
+        if (err) {
+          console.log("error get nombre annonces recycalge : ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+// get nombre reservation non lus
+recyclyDB.getNombreReservationNonLus = (id_annonceur) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT count(id_reservation) as nombreReservationNonLus FROM reservation,annonce WHERE id_annonceur=${id_annonceur} AND reservation.id_annonce=annonce.id_annonce AND reservation.lu=0`,
       function (err, results) {
         if (err) {
           console.log("error get nombre annonces recycalge : ", err);

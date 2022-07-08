@@ -33,4 +33,8 @@ router.get(
   annonceController.getNotificationRecyclage
 );
 
+router.get(
+  "/getNombreReservationNonLus/:idUser",
+  annonceController.getNombreReservationNonLus
+);
 module.exports = router;
