@@ -236,7 +236,8 @@ recyclyDB.addNotificationRecyclage = (id_reservation, date) => {
 recyclyDB.getNotificationRecyclage = (id_user) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT titre,nom,prenom,status FROM notification INNER JOIN reservation ON reservation.id_reserveur = ${id_user} INNER JOIN annonce ON reservation.id_annonce = annonce.id_annonce INNER JOIN user ON user.id_user = annonce.id_annonceur`,
+      // `SELECT titre,nom,prenom,status FROM notification INNER JOIN reservation ON reservation.id_reserveur = ${id_user} INNER JOIN annonce ON reservation.id_annonce = annonce.id_annonce INNER JOIN user ON user.id_user = annonce.id_annonceur`,
+      `SELECT titre,nom,prenom,status FROM notification,reservation,annonce,user WHERE reservation.id_reserveur = ${id_user} AND reservation.id_annonce = annonce.id_annonce AND  user.id_user = annonce.id_annonceur  AND notification.id_reservation=reservation.id_reservation`,
       function (err, results) {
         if (err) {
           console.log("error get notifications recyclage : ", err);
@@ -247,6 +248,39 @@ recyclyDB.getNotificationRecyclage = (id_user) => {
     );
   });
 };
+
+//  get nombre non notifications
+recyclyDB.getNombreNotificationNonLus = (id_user) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT count(id_notification) as nombreNotificationNonLus FROM notification INNER JOIN reservation ON reservation.id_reserveur = ${id_user} INNER JOIN annonce ON reservation.id_annonce = annonce.id_annonce INNER JOIN user ON user.id_user = annonce.id_annonceur AND notification.lu=0`,
+      function (err, results) {
+        if (err) {
+          console.log("error get notifications recyclage : ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+//  update notifications lu
+recyclyDB.updateNotificationLus = (id_user) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE notification SET notification.lu = 1 WHERE (SELECT id_notification FROM notification,reservation WHERE reservation.id_reserveur=${id_user}  AND notification.id_reservation=reservation.id_reservation AND notification.lu=0)`,
+      function (err, results) {
+        if (err) {
+          console.log("error update notifications set lu: ", err);
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
 // get nombre annonces recyclage
 recyclyDB.getNombreAnnoncesRecyclage = (id_annonceur) => {
   return new Promise((resolve, reject) => {

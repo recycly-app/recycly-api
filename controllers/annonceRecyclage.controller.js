@@ -168,3 +168,17 @@ module.exports.getNombreReservationNonLus = (req, res) => {
     .then((result) => res.status(200).json(result))
     .catch((error) => res.status(400).json({ error: error + "" }));
 };
+
+// get nombre nnotifications non lus
+module.exports.getNombreNotificationNonLus = (req, res) => {
+  db.getNombreNotificationNonLus(req.params.idUser)
+    .then((result) => res.status(200).json(result))
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};
+
+// update notification lu
+module.exports.updateNotificationLus = (req, res) => {
+  db.updateNotificationLus(req.params.idUser)
+    .then((result) => res.status(200).json(result))
+    .catch((error) => res.status(400).json({ error: error + "" }));
+};

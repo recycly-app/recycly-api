@@ -37,4 +37,15 @@ router.get(
   "/getNombreReservationNonLus/:idUser",
   annonceController.getNombreReservationNonLus
 );
+
+router.get(
+  "/getNombreNotificationNonLus/:idUser",
+  annonceController.getNombreNotificationNonLus
+);
+
+router.put(
+  "/updateNotificationLus/:idUser",
+  annonceController.updateNotificationLus
+);
+
 module.exports = router;

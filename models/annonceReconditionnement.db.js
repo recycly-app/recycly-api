@@ -176,7 +176,7 @@ recyclyDB.statusReservationReconditionnement = (id_reservation, status) => {
 recyclyDB.getNombreAnnoncesReconditionnement = (id_annonceur) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT count(id_annonce) as nombreAnnonces FROM annonce WHERE id_annonceur=${id_annonceur} `,
+      `SELECT count(id_annonce) as nombreAnnonces FROM annonce WHERE id_annonceur=${id_annonceur} AND type='Reconditionnement'`,
       function (err, results) {
         if (err) {
           console.log("error get nombre annonces reconditionnement : ", err);
